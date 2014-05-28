@@ -1,0 +1,32 @@
+{
+    "name": "tuyakhov/yii2-braintree",
+    "description": "Braintree for Yii2",
+    "version": "0.0.1",
+    "type": "yii2-extension",
+    "keywords": ["yii", "yii2", "braintree"],
+    "homepage": "https://github.com/tuyakhov/yii2-braintree",
+    "time": "2014-05-27",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Anton Tuyakhov",
+            "email": "atuyakhov@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/tuyakhov/yii2-braintree/issues",
+        "source": "https://github.com/tuyakhov/yii2-braintree"
+    },
+    "require": {
+        "php": ">=5.4.0",
+        "yiisoft/yii2": "*",
+        "braintree/braintree_php" : "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "yii\\braintree\\": ""
+        }
+    },
+    "minimum-stability": "dev"
+}
