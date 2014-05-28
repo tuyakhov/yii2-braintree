@@ -9,10 +9,10 @@ use yii\base\InvalidConfigException;
 
 class Braintree extends Component
 {
-    private $environment = 'sandbox';
-    private $merchantId;
-    private $publicKey;
-    private $privateKey;
+    public $environment = 'sandbox';
+    public $merchantId;
+    public $publicKey;
+    public $privateKey;
     public $clientSideKey;
 
     public $options;
