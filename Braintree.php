@@ -2,7 +2,7 @@
 /**
  * @copyright Anton Tuyakhov <atuyakhov@gmail.com>
  */
-namespace yii\braintree;
+namespace tuyakhov\braintree;
 
 use yii\base\Component;
 use yii\base\InvalidConfigException;
@@ -13,6 +13,7 @@ class Braintree extends Component
     private $merchantId;
     private $publicKey;
     private $privateKey;
+    public $clientSideKey;
 
     public $options;
 
@@ -52,6 +53,9 @@ class Braintree extends Component
         }
     }
 
+    /**
+     * This save customer to braintree and returns result array
+     */
     public function saveCustomer()
     {
         $result = \Braintree_Customer::create($this->options['customer']);
@@ -63,6 +67,9 @@ class Braintree extends Component
         }
     }
 
+    /**
+     * This save credit cart to braintree
+     */
     public function saveCreditCard()
     {
         $send_array = $this->options['creditCard'];

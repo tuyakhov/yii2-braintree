@@ -1,8 +1,7 @@
 <?php
-namespace yii\braintree;
+namespace tuyakhov\braintree;
 
 use yii\base\Model;
-use yii\helpers\Html;
 
 class BraintreeForm extends Model
 {
@@ -53,11 +52,10 @@ class BraintreeForm extends Model
             [['customerId'], 'required', 'on' => 'creditCard'],
             [['customerId'], 'required', 'on' => 'address'],
             [['customer_firstName', 'customer_lastName'], 'required', 'on' => 'customer'],
-            [['amount'], 'required', 'on' => 'charge'],
+            [['amount', 'creditCard_number', 'creditCard_cvv', 'creditCard_month', 'creditCard_year', 'creditCard_date'], 'required', 'on' => 'sale'],
             [['amount'], 'numerical'],
             [['customer_email'], 'email'],
-            [['creditCard_number', ' creditCard_cvv', ' creditCard_month', ' creditCard_year', ' creditCard_date',
-                'customer_firstName',
+            [['customer_firstName',
                 'customer_lastName',
                 'customer_company',
                 'customer_phone',
@@ -142,7 +140,7 @@ class BraintreeForm extends Model
 
     }
 
-    public function charge()
+    public function sale()
     {
         $return = \Yii::$app->get('braintree')->singleCharge();
         if ($return['status'] === false) {
