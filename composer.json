@@ -25,7 +25,7 @@
     },
     "autoload": {
         "psr-4": {
-            "yii\\braintree\\": ""
+            "tuyakhov\\yii2-braintree\\": ""
         }
     },
     "minimum-stability": "dev"
