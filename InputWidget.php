@@ -14,13 +14,7 @@ class InputWidget extends \yii\widgets\InputWidget
     public function init()
     {
         if ($this->hasModel()) {
-            if (strpos($this->attribute, '_') === false) {
-                $value = $this->attribute;
-            } else {
-                $pieces = explode('_', $this->attribute);
-                $value = $pieces[1];
-            }
-            $this->options['data-encrypted-name'] = $value;
+            $this->options['data-encrypted-name'] = $this->attribute;
         }
         $this->options['autocomplete'] = 'off';
         echo $this->renderWidget();
