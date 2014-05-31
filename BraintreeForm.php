@@ -49,7 +49,7 @@ class BraintreeForm extends Model
     public function rules()
     {
         return [
-            [['customerId'], 'required', 'on' => 'creditCard'],
+            [['customerId', 'creditCard_number', 'creditCard_cvv', 'creditCard_month', 'creditCard_year'], 'required', 'on' => 'creditCard'],
             [['customerId'], 'required', 'on' => 'address'],
             [['customer_firstName', 'customer_lastName'], 'required', 'on' => 'customer'],
             [['amount', 'creditCard_number', 'creditCard_cvv', 'creditCard_month', 'creditCard_year'], 'required', 'on' => 'sale'],
