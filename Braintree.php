@@ -58,6 +58,9 @@ class Braintree extends Component
      */
     public function saveCustomer()
     {
+        if (isset($this->options['customerId'])) {
+            $this->options['customer']['id'] = $this->options['customerId'];
+        }
         $result = \Braintree_Customer::create($this->options['customer']);
 
         if ($result->success) {
