@@ -8,6 +8,7 @@ class BraintreeForm extends Model
 
     public $amount;
     public $orderId;
+    public $paymentMethodToken;
 
     public $creditCard_number;
     public $creditCard_cvv;
@@ -53,6 +54,7 @@ class BraintreeForm extends Model
             [['customerId'], 'required', 'on' => 'address'],
             [['customer_firstName', 'customer_lastName'], 'required', 'on' => 'customer'],
             [['amount', 'creditCard_number', 'creditCard_cvv', 'creditCard_month', 'creditCard_year'], 'required', 'on' => 'sale'],
+            [['amount', 'paymentMethodToken'], 'required', 'on' => 'saleFromVault'],
             [['amount'], 'double'],
             [['customer_email'], 'email'],
             [['customer_firstName',
@@ -146,6 +148,17 @@ class BraintreeForm extends Model
         $return = \Yii::$app->get('braintree')->singleCharge();
         if ($return['status'] === false) {
             $this->addError('creditCard_number', $return['result']->_attributes['message']);
+            return false;
+        } else {
+            return $return;
+        }
+    }
+
+    public function saleFromVault()
+    {
+        $return = \Yii::$app->get('braintree')->singleCharge();
+        if ($return['status'] === false) {
+            $this->addError('amount', $return['result']->_attributes['message']);
             return false;
         } else {
             return $return;
