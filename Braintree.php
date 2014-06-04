@@ -54,6 +54,14 @@ class Braintree extends Component
     }
 
     /**
+     * Finds transaction by id
+     */
+    public function findTransaction($id)
+    {
+        return \Braintree_Transaction::find($id);
+    }
+
+    /**
      * This save customer to braintree and returns result array
      */
     public function saveCustomer()
