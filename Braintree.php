@@ -139,15 +139,16 @@ class Braintree extends Component
 
     public function getOptions($values)
     {
-        if (isset($values['amount'])) $this->setAmount($values['amount']);
-        if (isset($values['orderId'])) $this->options['orderId'] = $values['orderId'];
-        if (isset($values['creditCard'])) $this->getCreditCard($values['creditCard']);
-        if (isset($values['customer'])) $this->options['customer'] = $values['customer'];
-        if (isset($values['billing'])) $this->options['billing'] = $values['billing'];
-        if (isset($values['shipping'])) $this->options['shipping'] = $values['shipping'];
-
-        //For storing payment method in vault
-        if (isset($values['customerId'])) $this->options['customerId'] = $values['customerId'];
+        if (!empty($values)) {
+            foreach ($values as $key => $value) {
+                if ($key == 'amount')
+                    $this->setAmount($values['amount']);
+                elseif ($key == 'creditCard')
+                    $this->getCreditCard($values['creditCard']);
+                else
+                    $this->options[$key] = $value;
+            }
+        }
     }
 
     /**
