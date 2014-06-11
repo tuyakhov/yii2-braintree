@@ -51,14 +51,17 @@ class BraintreeForm extends Model
     public function rules()
     {
         return [
-            [['customerId', 'creditCard_number', 'creditCard_cvv', 'creditCard_month', 'creditCard_year', 'creditCard_date'], 'required', 'on' => 'creditCard'],
+            [['customerId', 'creditCard_number', 'creditCard_cvv'], 'required', 'on' => 'creditCard'],
             [['customerId'], 'required', 'on' => 'address'],
             [['customer_firstName', 'customer_lastName'], 'required', 'on' => 'customer'],
             [['amount', 'creditCard_number', 'creditCard_cvv', 'creditCard_month', 'creditCard_year', 'creditCard_date'], 'required', 'on' => 'sale'],
             [['amount', 'paymentMethodToken'], 'required', 'on' => 'saleFromVault'],
             [['amount'], 'double'],
             [['customer_email'], 'email'],
-            [['customer_firstName',
+            [['creditCard_month',
+                'creditCard_year',
+                'creditCard_date',
+                'customer_firstName',
                 'customer_lastName',
                 'customer_company',
                 'customer_phone',
@@ -212,22 +215,13 @@ class BraintreeForm extends Model
         $values = $this->getValuesFromAttributes();
         if (!empty($result->errors)) {
             foreach (array_keys($values) as $key) {
-                if ($result->errors->forKey($key)->shallowAll()) {
-                    foreach ($result->errors->forKey($key)->shallowAll() as $error) {
-                        $this->addError($key . '_' . $error->attribute, $error->message);
+                if (($parentKeyErrors = $result->errors->forKey($key)->shallowAll()) !== null) {
+                    foreach ($parentKeyErrors as $error) {
+                        $this->addError(($key . '_' . $error->_attribute), $error->_message);
                     }
                 }
             }
         }
     }
 
-    public
-    function beforeValidate()
-    {
-        if (!empty($this->creditCard_year) && !empty($this->creditCard_month))
-            $this->creditCard_date = $this->creditCard_month . '/' . $this->creditCard_year;
-        elseif (!empty($this->creditCard_date))
-            list ($this->creditCard_month, $this->creditCard_year) = explode('/', $this->creditCard_date);
-        return parent::beforeValidate();
-    }
 }
