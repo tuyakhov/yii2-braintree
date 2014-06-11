@@ -54,7 +54,7 @@ class BraintreeForm extends Model
             [['customerId', 'creditCard_number', 'creditCard_cvv', 'creditCard_expirationDate'], 'required', 'on' => 'creditCard'],
             [['customerId'], 'required', 'on' => 'address'],
             [['customer_firstName', 'customer_lastName'], 'required', 'on' => 'customer'],
-            [['amount', 'creditCard_number', 'creditCard_cvv', 'creditCard_month', 'creditCard_year', 'creditCard_expirationDate'], 'required', 'on' => 'sale'],
+            [['amount', 'creditCard_number', 'creditCard_cvv', 'creditCard_expirationDate'], 'required', 'on' => 'sale'],
             [['amount', 'paymentMethodToken'], 'required', 'on' => 'saleFromVault'],
             [['amount'], 'double'],
             [['customer_email'], 'email'],
