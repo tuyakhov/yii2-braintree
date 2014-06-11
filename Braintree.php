@@ -142,7 +142,7 @@ class Braintree extends Component
             'name' => null,
         ];
         $values = array_merge($default, $input_values);
-        $this->setCreditCard($values['number'], $values['cvv'], $values['month'], $values['year'], $values['date'], $values['name']);
+        $this->setCreditCard($values['number'], $values['cvv'], $values['expirationMonth'], $values['expirationYear'], $values['expirationDate'], $values['name']);
     }
 
     public function getOptions($values)

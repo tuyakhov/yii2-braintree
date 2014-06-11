@@ -13,9 +13,9 @@ class BraintreeForm extends Model
 
     public $creditCard_number;
     public $creditCard_cvv;
-    public $creditCard_month;
-    public $creditCard_year;
-    public $creditCard_date;
+    public $creditCard_expirationMonth;
+    public $creditCard_expirationYear;
+    public $creditCard_expirationDate;
     public $creditCard_name;
 
     public $customer_firstName;
@@ -51,15 +51,15 @@ class BraintreeForm extends Model
     public function rules()
     {
         return [
-            [['customerId', 'creditCard_number', 'creditCard_cvv'], 'required', 'on' => 'creditCard'],
+            [['customerId', 'creditCard_number', 'creditCard_cvv', 'creditCard_expirationDate'], 'required', 'on' => 'creditCard'],
             [['customerId'], 'required', 'on' => 'address'],
             [['customer_firstName', 'customer_lastName'], 'required', 'on' => 'customer'],
             [['amount', 'creditCard_number', 'creditCard_cvv', 'creditCard_month', 'creditCard_year', 'creditCard_date'], 'required', 'on' => 'sale'],
             [['amount', 'paymentMethodToken'], 'required', 'on' => 'saleFromVault'],
             [['amount'], 'double'],
             [['customer_email'], 'email'],
-            [['creditCard_month',
-                'creditCard_year',
+            [['creditCard_expirationMonth',
+                'creditCard_expirationYear',
                 'creditCard_date',
                 'customer_firstName',
                 'customer_lastName',
@@ -95,9 +95,9 @@ class BraintreeForm extends Model
             'orderId' => 'Order ID',
             'creditCard_number' => 'Credit Card Number',
             'creditCard_cvv' => 'Security Code',
-            'creditCard_month' => 'Expiration Month (MM)',
-            'creditCard_year' => 'Expiration Year (YYYY)',
-            'creditCard_date' => 'Expiration Date (MM/YYYY)',
+            'creditCard_expirationMonth' => 'Expiration Month (MM)',
+            'creditCard_expirationYear' => 'Expiration Year (YYYY)',
+            'creditCard_expirationDate' => 'Expiration Date (MM/YYYY)',
             'creditCard_name' => 'Name on Card',
             'customer_firstName' => 'First Name',
             'customer_lastName' => 'Last Name',
@@ -215,9 +215,10 @@ class BraintreeForm extends Model
         $values = $this->getValuesFromAttributes();
         if (!empty($result->errors)) {
             foreach (array_keys($values) as $key) {
-                if (($parentKeyErrors = $result->errors->forKey($key)->shallowAll()) !== null) {
-                    foreach ($parentKeyErrors as $error) {
-                        $this->addError(($key . '_' . $error->_attribute), $error->_message);
+                $keyErrors = $result->errors->forKey($key);
+                if (isset($keyErrors)) {
+                    foreach ($keyErrors->shallowAll() as $error) {
+                        $this->addError(($key . '_' . $error->attribute), $error->message);
                     }
                 }
             }
