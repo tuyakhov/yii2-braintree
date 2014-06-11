@@ -2,6 +2,7 @@
 namespace tuyakhov\braintree;
 
 use yii\base\Model;
+use yii\base\ModelEvent;
 
 class BraintreeForm extends Model
 {
@@ -50,15 +51,14 @@ class BraintreeForm extends Model
     public function rules()
     {
         return [
-            [['customerId', 'creditCard_number', 'creditCard_cvv', 'creditCard_month', 'creditCard_year'], 'required', 'on' => 'creditCard'],
+            [['customerId', 'creditCard_number', 'creditCard_cvv', 'creditCard_month', 'creditCard_year', 'creditCard_date'], 'required', 'on' => 'creditCard'],
             [['customerId'], 'required', 'on' => 'address'],
             [['customer_firstName', 'customer_lastName'], 'required', 'on' => 'customer'],
-            [['amount', 'creditCard_number', 'creditCard_cvv', 'creditCard_month', 'creditCard_year'], 'required', 'on' => 'sale'],
+            [['amount', 'creditCard_number', 'creditCard_cvv', 'creditCard_month', 'creditCard_year', 'creditCard_date'], 'required', 'on' => 'sale'],
             [['amount', 'paymentMethodToken'], 'required', 'on' => 'saleFromVault'],
             [['amount'], 'double'],
             [['customer_email'], 'email'],
             [['customer_firstName',
-                'creditCard_date',
                 'customer_lastName',
                 'customer_company',
                 'customer_phone',
@@ -124,7 +124,7 @@ class BraintreeForm extends Model
         ];
     }
 
-    public function send()
+    public function getValuesFromAttributes()
     {
         $values = array();
         foreach ($this->attributes as $key => $val) {
@@ -137,7 +137,12 @@ class BraintreeForm extends Model
                 }
             }
         }
-        \Yii::$app->get('braintree')->getOptions($values);
+        return $values;
+    }
+
+    public function send()
+    {
+        \Yii::$app->get('braintree')->getOptions($this->getValuesFromAttributes());
         $scenario = $this->getScenario();
         return $this->$scenario();
 
@@ -147,7 +152,7 @@ class BraintreeForm extends Model
     {
         $return = \Yii::$app->get('braintree')->singleCharge();
         if ($return['status'] === false) {
-            $this->addError('creditCard_number', $return['result']->_attributes['message']);
+            $this->addErrorFromResponse($return['result']);
             return false;
         } else {
             return $return;
@@ -158,7 +163,7 @@ class BraintreeForm extends Model
     {
         $return = \Yii::$app->get('braintree')->singleCharge();
         if ($return['status'] === false) {
-            $this->addError('amount', $return['result']->_attributes['message']);
+            $this->addErrorFromResponse($return['result']);
             return false;
         } else {
             return $return;
@@ -169,9 +174,7 @@ class BraintreeForm extends Model
     {
         $return = \Yii::$app->get('braintree')->saveCustomer();
         if ($return['status'] === false) {
-            foreach (($return['result']->errors->deepAll()) as $error) {
-                $this->addError('customer_firstName', $error->message);
-            }
+            $this->addErrorFromResponse($return['result']);
             return false;
         } else {
             return $return;
@@ -182,7 +185,7 @@ class BraintreeForm extends Model
     {
         $return = \Yii::$app->get('braintree')->saveCreditCard();
         if ($return['status'] === false) {
-            $this->addError('creditCard_number', 'Error saving card');
+            $this->addErrorFromResponse($return['result']);
             return false;
         } else {
             return $return;
@@ -193,10 +196,38 @@ class BraintreeForm extends Model
     {
         $return = \Yii::$app->get('braintree')->saveAddress();
         if ($return['status'] === false) {
-            $this->addError('billing_firstName', 'Error saving card');
+            $this->addErrorFromResponse($return['result']);
             return false;
         } else {
             return $return;
         }
+    }
+
+    /**
+     * This add error from braintree response.
+     * @param $result \Braintree_Result_Error
+     */
+    public function addErrorFromResponse($result)
+    {
+        $values = $this->getValuesFromAttributes();
+        if (!empty($result->errors)) {
+            foreach (array_keys($values) as $key) {
+                if ($result->errors->forKey($key)->shallowAll()) {
+                    foreach ($result->errors->forKey($key)->shallowAll() as $error) {
+                        $this->addError($key . '_' . $error->attribute, $error->message);
+                    }
+                }
+            }
+        }
+    }
+
+    public
+    function beforeValidate()
+    {
+        if (!empty($this->creditCard_year) && !empty($this->creditCard_month))
+            $this->creditCard_date = $this->creditCard_month . '/' . $this->creditCard_year;
+        elseif (!empty($this->creditCard_date))
+            list ($this->creditCard_month, $this->creditCard_year) = explode('/', $this->creditCard_date);
+        return parent::beforeValidate();
     }
 }
