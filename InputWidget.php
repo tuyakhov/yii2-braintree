@@ -13,9 +13,7 @@ class InputWidget extends \yii\widgets\InputWidget
      */
     public function init()
     {
-        if ($this->hasModel()) {
-            $this->options['data-encrypted-name'] = $this->attribute;
-        }
+        $this->options['data-encrypted-name'] = Html::getInputName($this->model, $this->attribute);
         $this->options['autocomplete'] = 'off';
         echo $this->renderWidget();
         parent::init();
@@ -28,9 +26,10 @@ class InputWidget extends \yii\widgets\InputWidget
     public function renderWidget()
     {
         if ($this->hasModel()) {
+            $this->options['value'] = '';
             $content = Html::activeTextInput($this->model, $this->attribute, $this->options);
         } else {
-            $content = Html::textInput($this->name, $this->value, $this->options);
+            $content = Html::textInput($this->name, '', $this->options);
         }
         return $content;
     }
