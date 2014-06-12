@@ -136,9 +136,9 @@ class Braintree extends Component
     {
         $default = [
             'cvv' => null,
-            'month' => null,
-            'year' => null,
-            'date' => null,
+            'expirationMonth' => null,
+            'expirationYear' => null,
+            'expirationDate' => null,
             'name' => null,
         ];
         $values = array_merge($default, $input_values);
