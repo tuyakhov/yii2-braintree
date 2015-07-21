@@ -37,6 +37,9 @@ class Braintree extends Component
 
     /**
      * Braintree sale function
+     * @param bool|true $submitForSettlement
+     * @param bool|true $storeInVaultOnSuccess
+     * @return array
      */
     public function singleCharge($submitForSettlement = true, $storeInVaultOnSuccess = true)
     {
@@ -63,6 +66,7 @@ class Braintree extends Component
 
     /**
      * This save customer to braintree and returns result array
+     * @return array
      */
     public function saveCustomer()
     {
@@ -80,6 +84,7 @@ class Braintree extends Component
 
     /**
      * This save credit cart to braintree
+     * @return array
      */
     public function saveCreditCard()
     {
