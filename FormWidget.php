@@ -52,7 +52,7 @@ class FormWidget extends Widget
         $clientSideKey = Yii::$app->get('braintree')->clientSideKey;
         $view = $this->getView();
         BraintreeAsset::register($view);
-        $view->registerJs("var braintree = Braintree.create('$clientSideKey'); braintree.onSubmitEncryptForm('$id');");
+        $view->registerJs("braintree.setup('$clientSideKey', 'custom', {id: '$id'});");
         echo Html::endForm();
     }
 

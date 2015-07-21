@@ -13,7 +13,7 @@ class InputWidget extends \yii\widgets\InputWidget
      */
     public function init()
     {
-        $this->options['data-encrypted-name'] = Html::getInputName($this->model, $this->attribute);
+        $this->options['data-braintree-name'] = Html::getInputName($this->model, $this->attribute);
         $this->options['autocomplete'] = 'off';
         echo $this->renderWidget();
         parent::init();
