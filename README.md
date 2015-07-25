@@ -1,7 +1,7 @@
-yii2-braintree
+Yii2-braintree
 ==============
 
-Integrate a credit card payment form with Braintree's API into Yii2
+Integrate a credit card payment form with Braintree's API into Yii2. Inspired by
 
 
 Installation
@@ -27,8 +27,50 @@ to the require section of your `composer.json` file.
 Usage
 -----
 
+You should add Braintree component to your yii config first:
+
+```
+'components' => [
+    'braintree' => [
+        'class' => 'tuyakhov\braintree\Braintree',
+        'merchantId' => 'YOUR_MERCHANT_ID',
+        'publicKey' => 'YOUR_PUBLIC_KEY',
+        'privateKey' => 'YOUR_PRIVATE_KEY',
+        'clientSideKey' => 'YOUR_CSE_KEY',
+    ],
+]
+```
+
 Once the extension is installed, simply use it in your code by  :
 
-```php
-<?= "<?= \\{$generator->namespace}AutoloadExample::widget(); ?>" ?>
+`BraintreeForm` provide all basic operations for sales and stores customer info. Operation name equals scenario name. Available scenarios:
+
 ```
+creditCard - create a credit card [doc](https://developers.braintreepayments.com/ios+php/reference/request/credit-card/create)
+address - create an address [doc](https://developers.braintreepayments.com/ios+php/reference/request/address/create)
+customer - create a customer [doc](https://developers.braintreepayments.com/ios+php/reference/request/customer/create)
+sale - create a transaction [doc](https://developers.braintreepayments.com/ios+php/reference/request/transaction/sale)
+saleFromVault - create a transaction from your Vault [doc](https://developers.braintreepayments.com/ios+php/reference/request/transaction/sale)
+```
+
+Action example:
+```php
+    $model = new BraintreeForm();
+    $model->setScenario('sale');
+    if ($model->load(Yii::$app->request->post()) && $model->send()) {
+        // do something
+    }
+    return $this->render('purchase', ['model' => $model]);
+```
+
+Form widget:
+```php
+    <?php $form = \tuyakhov\braintree\FormWidget::begin() ?>
+    <?= $form->field($model, 'creditCard_number'); ?>
+    <?= $form->field($model, 'creditCard_cvv'); ?>
+    <?= $form->field($model, 'creditCard_expirationDate'); ?>
+    <?= $form->field($model, 'amount'); ?>
+    <?= \yii\helpers\Html::submitButton()?>
+    <?php \tuyakhov\braintree\FormWidget::end(); ?>
+```
+
