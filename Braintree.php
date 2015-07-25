@@ -32,6 +32,7 @@ class Braintree extends Component
             }
             \Braintree_Configuration::$attribute($this->$attribute);
         }
+        $this->clientSideKey = \Braintree_ClientToken::generate();
         parent::init();
     }
 

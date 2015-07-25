@@ -5,11 +5,12 @@
 namespace tuyakhov\braintree;
 
 use Yii;
-use yii\helpers\Html;
-use yii\widgets\ActiveForm;
 
-class FormWidget extends ActiveForm
+class ActiveForm extends \yii\widgets\ActiveForm
 {
+    /**
+     * @inheritdoc
+     */
     public function init()
     {
         parent::init();
@@ -18,14 +19,7 @@ class FormWidget extends ActiveForm
         $view = $this->getView();
         BraintreeAsset::register($view);
         $view->registerJs("braintree.setup('$clientSideKey', 'custom', {id: '$id'});");
-        $this->fieldConfig = function ($model, $attribute) {
-            return [
-                'options' => [
-                    'data-braintree-name' => Html::getInputName($model, $attribute),
-                    'autocomplete' => 'off'
-                ]
-            ];
-        };
+        $this->fieldClass = ActiveField::className();
     }
 
 }

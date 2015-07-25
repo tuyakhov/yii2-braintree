@@ -36,7 +36,6 @@ You should add Braintree component to your yii config first:
         'merchantId' => 'YOUR_MERCHANT_ID',
         'publicKey' => 'YOUR_PUBLIC_KEY',
         'privateKey' => 'YOUR_PRIVATE_KEY',
-        'clientSideKey' => 'YOUR_CSE_KEY',
     ],
 ]
 ```
@@ -53,22 +52,26 @@ Once the extension is installed, simply use it in your code by  :
 
 Action example:
 ```php
+public function actionSale() {
     $model = new BraintreeForm();
     $model->setScenario('sale');
     if ($model->load(Yii::$app->request->post()) && $model->send()) {
         // do something
     }
     return $this->render('purchase', ['model' => $model]);
+}
 ```
 
-Form widget:
+Form widget for your view:
 ```php
-    <?php $form = \tuyakhov\braintree\FormWidget::begin() ?>
+    <?php $form = \tuyakhov\braintree\ActiveForm::begin() ?>
     <?= $form->field($model, 'creditCard_number'); ?>
     <?= $form->field($model, 'creditCard_cvv'); ?>
-    <?= $form->field($model, 'creditCard_expirationDate'); ?>
+    <?= $form->field($model, 'creditCard_expirationDate')->widget(\yii\widgets\MaskedInput::className(), [
+           'mask' => '99/9999',
+       ]) ?>
     <?= $form->field($model, 'amount'); ?>
     <?= \yii\helpers\Html::submitButton()?>
-    <?php \tuyakhov\braintree\FormWidget::end(); ?>
+    <?php \tuyakhov\braintree\ActiveForm::end(); ?>
 ```
 
