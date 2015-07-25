@@ -45,13 +45,11 @@ Once the extension is installed, simply use it in your code by  :
 
 `BraintreeForm` provide all basic operations for sales and stores customer info. Operation name equals scenario name. Available scenarios:
 
-```
-creditCard - create a credit card [doc](https://developers.braintreepayments.com/ios+php/reference/request/credit-card/create)
-address - create an address [doc](https://developers.braintreepayments.com/ios+php/reference/request/address/create)
-customer - create a customer [doc](https://developers.braintreepayments.com/ios+php/reference/request/customer/create)
-sale - create a transaction [doc](https://developers.braintreepayments.com/ios+php/reference/request/transaction/sale)
-saleFromVault - create a transaction from your Vault [doc](https://developers.braintreepayments.com/ios+php/reference/request/transaction/sale)
-```
+`creditCard` - create a credit card [doc](https://developers.braintreepayments.com/ios+php/reference/request/credit-card/create)  
+`address` - create an address [doc](https://developers.braintreepayments.com/ios+php/reference/request/address/create)  
+`customer` - create a customer [doc](https://developers.braintreepayments.com/ios+php/reference/request/customer/create)  
+`sale` - create a transaction [doc](https://developers.braintreepayments.com/ios+php/reference/request/transaction/sale)  
+`saleFromVault` - create a transaction from your Vault [doc](https://developers.braintreepayments.com/ios+php/reference/request/transaction/sale)  
 
 Action example:
 ```php
