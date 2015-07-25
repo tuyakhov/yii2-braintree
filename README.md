@@ -1,7 +1,7 @@
 Yii2-braintree
 ==============
 
-Integrate a credit card payment form with Braintree's API into Yii2. Inspired by
+Integrate a credit card payment form with Braintree's API into Yii2. Inspired by [braintreeapi](http://www.yiiframework.com/extension/braintreeapi/)
 
 
 Installation
