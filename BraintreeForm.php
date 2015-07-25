@@ -1,6 +1,7 @@
 <?php
 namespace tuyakhov\braintree;
 
+use yii\base\InvalidCallException;
 use yii\base\Model;
 use yii\base\ModelEvent;
 
