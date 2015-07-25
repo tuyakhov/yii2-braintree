@@ -8,7 +8,7 @@ use yii\web\AssetBundle;
 
 class BraintreeAsset extends AssetBundle
 {
-    public $sourcePath = '@bower/braintree-web/dist';
+    public $sourcePath = '@npm/braintree-web/dist';
     public $js = [
         'braintree.js',
     ];

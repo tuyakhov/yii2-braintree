@@ -20,8 +20,10 @@ class FormWidget extends ActiveForm
         $view->registerJs("braintree.setup('$clientSideKey', 'custom', {id: '$id'});");
         $this->fieldConfig = function ($model, $attribute) {
             return [
-                'data-braintree-name' => Html::getInputName($model, $attribute),
-                'autocomplete' => 'off'
+                'options' => [
+                    'data-braintree-name' => Html::getInputName($model, $attribute),
+                    'autocomplete' => 'off'
+                ]
             ];
         };
     }
