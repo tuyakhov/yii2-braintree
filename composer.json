@@ -1,7 +1,7 @@
 {
     "name": "tuyakhov/yii2-braintree",
     "description": "Braintree for Yii2",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "type": "yii2-extension",
     "keywords": ["yii", "yii2", "braintree"],
     "homepage": "https://github.com/tuyakhov/yii2-braintree",
