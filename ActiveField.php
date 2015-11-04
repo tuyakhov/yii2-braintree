@@ -19,7 +19,7 @@ class ActiveField extends \yii\widgets\ActiveField
             $inputName[0] = $inputName[1];
         }
         $this->inputOptions = array_merge([
-            'data-braintree-name' => $inputName[0],
+            'data-braintree-name' => \yii\helpers\Inflector::underscore($inputName[0]),
             'autocomplete' => 'off'
         ], $this->inputOptions);
     }
