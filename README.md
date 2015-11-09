@@ -3,6 +3,11 @@ Yii2-braintree
 
 Integrate a credit card payment form with Braintree's API into Yii2. Inspired by [braintreeapi](http://www.yiiframework.com/extension/braintreeapi/)
 
+[![Latest Stable Version](https://poser.pugx.org/tuyakhov/yii2-braintree/v/stable.png)](https://packagist.org/packages/tuyakhov/yii2-braintree)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/tuyakhov/yii2-braintree/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/tuyakhov/yii2-braintree/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/tuyakhov/yii2-braintree/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/tuyakhov/yii2-braintree/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/tuyakhov/yii2-braintree/badges/build.png?b=master)](https://scrutinizer-ci.com/g/tuyakhov/yii2-braintree/build-status/master)
+[![Total Downloads](https://poser.pugx.org/tuyakhov/yii2-braintree/downloads.png)](https://packagist.org/packages/tuyakhov/yii2-braintree)
 
 Installation
 ------------
