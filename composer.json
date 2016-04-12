@@ -27,6 +27,5 @@
         "psr-4": {
             "tuyakhov\\braintree\\": ""
         }
-    },
-    "minimum-stability": "dev"
+    }
 }
